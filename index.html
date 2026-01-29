@@ -4,17 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Symbolic Arts</title>
-  <meta name="description" content="SYMBOLIC ARTS is an entertainment design and build studio. Specializing in Creature/Make-up FX, animatronics, sculpture, and more." />
+  <meta name="description" content="Symbolic Arts FX – creature/makeup FX, animatronics, sculpture, and more." />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
-  <header class="header">
-    <div class="header-inner">
-      <a class="brand" href="#top">Symbolic Arts</a>
 
-      <nav class="nav">
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Symbolic Arts</div>
+
+      <nav class="topnav">
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
+        <a href="#lsa">lsa</a>
       </nav>
 
       <div class="social">
@@ -24,45 +26,60 @@
     </div>
   </header>
 
-  <!-- Optional hero image. If you don't have header.jpg, you can delete this div. -->
-  <div class="hero"></div>
-
-  <main id="top" class="container">
-    <section id="gallery" class="section">
+  <main>
+    <!-- GALLERY: big-left + three-right -->
+    <section id="gallery" class="gallery">
       <div class="gallery-grid">
-        <figure class="tile"><img src="assets/img/gallery332.jpg" alt="Gallery image 1" loading="lazy"></figure>
-        <figure class="tile"><img src="assets/img/gallery132.jpg" alt="Gallery image 2" loading="lazy"></figure>
-        <figure class="tile"><img src="assets/img/gallery232.jpg" alt="Gallery image 3" loading="lazy"></figure>
-        <figure class="tile"><img src="assets/img/gallery432.jpg" alt="Gallery image 4" loading="lazy"></figure>
+        <a class="g big" href="assets/img/gallery332.jpg">
+          <img src="assets/img/gallery332.jpg" alt="Gallery image 1" loading="eager">
+        </a>
+
+        <a class="g s1" href="assets/img/gallery132.jpg">
+          <img src="assets/img/gallery132.jpg" alt="Gallery image 2" loading="lazy">
+        </a>
+
+        <a class="g s2" href="assets/img/gallery232.jpg">
+          <img src="assets/img/gallery232.jpg" alt="Gallery image 3" loading="lazy">
+        </a>
+
+        <a class="g s3" href="assets/img/gallery432.jpg">
+          <img src="assets/img/gallery432.jpg" alt="Gallery image 4" loading="lazy">
+        </a>
       </div>
     </section>
 
+    <!-- CONTACT: background image + dark overlay -->
     <section id="contact" class="contact">
+      <div class="contact-overlay"></div>
+
       <div class="contact-inner">
         <div class="contact-card">
           <h2>Contact Us</h2>
-          <p>
-            Symbolic Arts<br>
-            9232 Independence Avenue, Suite 101,<br>
-            Chatsworth, CA 91311,<br>
-            USA
-          </p>
-          <p>
-            <a href="tel:+18188185200">818-818-5200</a><br>
-            <a href="mailto:info@symbolicartsfx.com">info@symbolicartsfx.com</a>
-          </p>
-          <p class="hours">Hours</p>
+
+          <div class="contact-text">
+            <div>Symbolic Arts</div>
+            <div>9232 Independence Avenue, Suite 101,</div>
+            <div>Chatsworth, CA 91311,</div>
+            <div>USA</div>
+            <div class="spacer"></div>
+            <div><a href="tel:+18188185200">818-818-5200</a></div>
+            <div><a href="mailto:info@symbolicartsfx.com">info@symbolicartsfx.com</a></div>
+            <div class="spacer"></div>
+            <div class="muted">Hours</div>
+          </div>
         </div>
 
-        <img class="logo" src="assets/img/salogo.png" alt="Symbolic Arts logo" loading="lazy">
+        <img class="contact-logo" src="assets/img/salogo.png" alt="Symbolic Arts logo" loading="lazy">
       </div>
     </section>
+
+    <section id="lsa" class="lsa-spacer"></section>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
       <div>Copyright ©2025 Symbolic Arts</div>
-      <div><a href="https://symbolicarts.squarespace.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a></div>
+      <div><a href="https://symbolicarts.squarespace.com/privacy-policy" target="_blank" rel="noopener">PRIVACY POLICY</a></div>
     </div>
   </footer>
 </body>
