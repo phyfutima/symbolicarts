@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Symbolic Arts</title>
+  <meta name="description" content="Symbolic Arts FX – creature/makeup FX, animatronics, sculpture, and more." />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
 
+<body>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">Symbolic Arts</div>
@@ -26,18 +27,26 @@
   </header>
 
   <main>
-    <section id="gallery" class="gallery">
-      <div class="gallery-grid">
-        <div class="big">
-          <img src="assets/img/gallery332.jpg" alt="Gallery image 1" loading="eager">
+    <!-- HERO SLIDESHOW -->
+    <section id="gallery" class="hero">
+      <div class="hero-viewport">
+        <div class="hero-track" id="heroTrack">
+          <!-- One image at a time, sliding left -->
+          <div class="hero-slide"><img src="assets/img/gallery332.jpg" alt="Gallery slide 1" loading="eager"></div>
+          <div class="hero-slide"><img src="assets/img/gallery132.jpg" alt="Gallery slide 2" loading="lazy"></div>
+          <div class="hero-slide"><img src="assets/img/gallery232.jpg" alt="Gallery slide 3" loading="lazy"></div>
+          <div class="hero-slide"><img src="assets/img/gallery432.jpg" alt="Gallery slide 4" loading="lazy"></div>
         </div>
 
-        <div class="small s1"><img src="assets/img/gallery132.jpg" alt="Gallery image 2" loading="lazy"></div>
-        <div class="small s2"><img src="assets/img/gallery232.jpg" alt="Gallery image 3" loading="lazy"></div>
-        <div class="small s3"><img src="assets/img/gallery432.jpg" alt="Gallery image 4" loading="lazy"></div>
+        <!-- Controls -->
+        <button class="hero-btn prev" type="button" aria-label="Previous slide" id="prevBtn">‹</button>
+        <button class="hero-btn next" type="button" aria-label="Next slide" id="nextBtn">›</button>
+
+        <div class="hero-dots" id="heroDots" aria-label="Slide navigation"></div>
       </div>
     </section>
 
+    <!-- CONTACT (same idea as Squarespace: text over background image) -->
     <section id="contact" class="contact">
       <div class="contact-overlay"></div>
 
@@ -71,5 +80,82 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      const track = document.getElementById('heroTrack');
+      const slides = Array.from(track.querySelectorAll('.hero-slide'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsWrap = document.getElementById('heroDots');
+
+      let index = 0;
+      let timer = null;
+      const AUTOPLAY_MS = 5000;
+
+      // Build dots
+      const dots = slides.map((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot';
+        b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        b.addEventListener('click', () => goTo(i, true));
+        dotsWrap.appendChild(b);
+        return b;
+      });
+
+      function render() {
+        track.style.transform = `translateX(${-index * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      }
+
+      function goTo(i, userAction) {
+        index = (i + slides.length) % slides.length;
+        render();
+        if (userAction) restartAutoplay();
+      }
+
+      function next(userAction) { goTo(index + 1, userAction); }
+      function prev(userAction) { goTo(index - 1, userAction); }
+
+      function startAutoplay() {
+        stopAutoplay();
+        timer = setInterval(() => next(false), AUTOPLAY_MS);
+      }
+
+      function stopAutoplay() {
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      function restartAutoplay() {
+        startAutoplay();
+      }
+
+      nextBtn.addEventListener('click', () => next(true));
+      prevBtn.addEventListener('click', () => prev(true));
+
+      // Pause on hover (desktop)
+      const viewport = document.querySelector('.hero-viewport');
+      viewport.addEventListener('mouseenter', stopAutoplay);
+      viewport.addEventListener('mouseleave', startAutoplay);
+
+      // Basic swipe (mobile)
+      let startX = null;
+      viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+      viewport.addEventListener('touchend', (e) => {
+        if (startX === null) return;
+        const endX = e.changedTouches[0].clientX;
+        const dx = endX - startX;
+        startX = null;
+        if (Math.abs(dx) > 40) {
+          (dx < 0) ? next(true) : prev(true);
+        }
+      }, {passive:true});
+
+      // Init
+      render();
+      startAutoplay();
+    })();
+  </script>
 </body>
 </html>
