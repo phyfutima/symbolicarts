@@ -15,9 +15,11 @@ body{
 a{color:inherit;text-decoration:none}
 a:hover{opacity:.85}
 
-/* Top bar */
+/* Top bar (simple, like your Pages version) */
 .topbar{
-  position:sticky; top:0; z-index:50;
+  position:sticky;
+  top:0;
+  z-index:50;
   background:rgba(11,11,11,.92);
   border-bottom:1px solid var(--line);
   backdrop-filter: blur(8px);
@@ -30,38 +32,89 @@ a:hover{opacity:.85}
   padding:14px 18px;
 }
 .brand{font-weight:650;letter-spacing:.2px}
-.topnav{display:flex;gap:14px}
+.topnav{display:flex;gap:14px;align-items:center}
 .social{display:flex;gap:14px;font-size:14px;color:var(--muted)}
 .social a{color:var(--muted)}
 
-/* Gallery: big left + 3 stacked right */
-.gallery-grid{
-  display:grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+/* HERO SLIDESHOW */
+.hero{
   width:100%;
   background:#000;
 }
-.big{grid-column:1;grid-row:1/4}
-.small.s1{grid-column:2;grid-row:1}
-.small.s2{grid-column:2;grid-row:2}
-.small.s3{grid-column:2;grid-row:3}
-
-.gallery-grid img{
+.hero-viewport{
+  position:relative;
+  width:100%;
+  /* match the “one big image at a time” feel */
+  height: calc(100vh - 56px); /* approx header height */
+  min-height: 520px;
+  overflow:hidden;
+}
+.hero-track{
+  display:flex;
   width:100%;
   height:100%;
-  object-fit:cover;   /* Squarespace-style “fill” */
+  transition: transform 600ms ease;
+  will-change: transform;
+}
+.hero-slide{
+  flex: 0 0 100%;
+  width:100%;
+  height:100%;
+  background:#000;
+}
+.hero-slide img{
+  width:100%;
+  height:100%;
+  object-fit: cover;     /* matches modern hero behavior */
+  object-position: center;
   display:block;
 }
 
-/* Mobile: stack images vertically, no weird crop */
-@media (max-width:820px){
-  .gallery-grid{grid-template-columns:1fr;grid-template-rows:auto}
-  .big,.small{grid-column:auto;grid-row:auto}
-  .gallery-grid img{height:auto;object-fit:contain;background:#000}
+/* Buttons */
+.hero-btn{
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  width:44px;
+  height:44px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  font-size:28px;
+  line-height:40px;
+  cursor:pointer;
+  user-select:none;
+}
+.hero-btn.prev{left:14px}
+.hero-btn.next{right:14px}
+.hero-btn:hover{background: rgba(0,0,0,.5)}
+
+/* Dots */
+.hero-dots{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:12px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+}
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.12);
+  padding:0;
+  cursor:pointer;
+}
+.dot.active{
+  background: rgba(255,255,255,.9);
+  border-color: rgba(255,255,255,.9);
 }
 
-/* Contact section: background + overlay + card */
+/* CONTACT section with background image */
 .contact{
   position:relative;
   min-height:520px;
@@ -70,7 +123,8 @@ a:hover{opacity:.85}
   background: url("img/humanoidconceptart.jpg") center/cover no-repeat;
 }
 .contact-overlay{
-  position:absolute; inset:0;
+  position:absolute;
+  inset:0;
   background:rgba(0,0,0,.55);
 }
 .contact-inner{
@@ -97,6 +151,10 @@ a:hover{opacity:.85}
   opacity:.95;
 }
 @media (max-width:820px){
+  .hero-viewport{
+    height: 70vh;
+    min-height: 380px;
+  }
   .contact,.contact-inner{min-height:auto}
   .contact-logo{position:static;display:block;margin-top:16px;width:140px}
 }
