@@ -79,30 +79,27 @@ a:hover{opacity:.85}
 .hero-viewport{
   position:relative;
   width:100%;
-  /* match the “one big image at a time” feel */
-  height: calc(100vh - 56px); /* approx header height */
-  min-height: 520px;
   overflow:hidden;
+  background:#000;
+  height:auto;        
+  min-height:0;       
 }
+
 .hero-track{
   display:flex;
   width:100%;
-  height:100%;
   transition: transform 600ms ease;
   will-change: transform;
 }
+
 .hero-slide{
   flex: 0 0 100%;
   width:100%;
-  height:100%;
-  background:#000;
 }
 .hero-slide img{
   width:100%;
-  height:100%;
-  object-fit: contain;       
-  object-position: center;
-  background:#000;           
+  height:auto;        
+  display:block;
 }
 
 /* Buttons */
