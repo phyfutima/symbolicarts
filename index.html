@@ -231,30 +231,20 @@
 
   const speed = 0.25; // smaller = slower background movement
 
-  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  function update() {
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
 
-  function tick() {
-    const r = section.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const progress = (vh - rect.top) / (vh + rect.height);
+    const clamped = Math.max(0, Math.min(1, progress));
 
-    // progress: 0 when section just enters view, 1 when it leaves
-    const progress = clamp((vh - r.top) / (vh + r.height), 0, 1);
+    const y = 50 + (clamped - 0.5) * 40 * speed;
+    section.style.backgroundPosition = `center ${y}%`;
 
-    // Move background upward slower than scroll
-    const offset = (progress - 0.5) * 200 * speed; // 200px range
-    section.style.setProperty('--parallaxY', `${offset}px`);
-
-    requestAnimationFrame(tick);
+    requestAnimationFrame(update);
   }
 
-  // Use CSS variable to drive transform
-  const style = document.createElement('style');
-  style.textContent = `
-    .contact::before { transform: translate3d(0, var(--parallaxY, 0px), 0); }
-  `;
-  document.head.appendChild(style);
-
-  requestAnimationFrame(tick);
+  requestAnimationFrame(update);
 })();
 </script>
 </body>
