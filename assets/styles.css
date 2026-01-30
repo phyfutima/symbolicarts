@@ -285,13 +285,19 @@ a:hover{opacity:.85}
   height:38px;
   border-radius:19px;
   background:#fff;
-  color:#222;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:700;
   text-decoration:none;
 }
+
+.footer-icons .icon svg{
+  width:18px;
+  height:18px;
+  fill:#222;
+  display:block;
+}
+
 
 .footer-text{
   display:flex;
