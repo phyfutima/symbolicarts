@@ -224,5 +224,38 @@
       startAutoplay();
     })();
   </script>
+<script>
+(() => {
+  const section = document.querySelector('.contact');
+  if (!section) return;
+
+  const speed = 0.25; // smaller = slower background movement
+
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+  function tick() {
+    const r = section.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    // progress: 0 when section just enters view, 1 when it leaves
+    const progress = clamp((vh - r.top) / (vh + r.height), 0, 1);
+
+    // Move background upward slower than scroll
+    const offset = (progress - 0.5) * 200 * speed; // 200px range
+    section.style.setProperty('--parallaxY', `${offset}px`);
+
+    requestAnimationFrame(tick);
+  }
+
+  // Use CSS variable to drive transform
+  const style = document.createElement('style');
+  style.textContent = `
+    .contact::before { transform: translate3d(0, var(--parallaxY, 0px), 0); }
+  `;
+  document.head.appendChild(style);
+
+  requestAnimationFrame(tick);
+})();
+</script>
 </body>
 </html>
