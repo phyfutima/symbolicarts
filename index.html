@@ -229,22 +229,42 @@
   const section = document.querySelector('.contact');
   if (!section) return;
 
-  const speed = 0.25; // smaller = slower background movement
+  // Tuning (these are the only two knobs)
+  const SPEED = 0.18;     // 0.12–0.25 is typical; lower = “farther away”
+  const BASE_Y = 0;       // starting offset in pixels
+
+  let ticking = false;
 
   function update() {
+    ticking = false;
+
     const rect = section.getBoundingClientRect();
-    const vh = window.innerHeight;
+    const scrollY = window.scrollY || window.pageYOffset;
 
-    const progress = (vh - rect.top) / (vh + rect.height);
-    const clamped = Math.max(0, Math.min(1, progress));
+    // section's top position in the document
+    const sectionTop = scrollY + rect.top;
 
-    const y = 50 + (clamped - 0.5) * 40 * speed;
-    section.style.backgroundPosition = `center ${y}%`;
+    // how far the page has scrolled past the section top
+    const delta = scrollY - sectionTop;
 
-    requestAnimationFrame(update);
+    // parallax offset (background moves slower than content)
+    const bgY = BASE_Y + delta * SPEED;
+
+    section.style.backgroundPosition = `center ${bgY}px`;
   }
 
-  requestAnimationFrame(update);
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  // run once on load
+  update();
 })();
 </script>
 </body>
