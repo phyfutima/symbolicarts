@@ -146,27 +146,27 @@ a:hover{opacity:.85}
   border-color: rgba(255,255,255,.9);
 }
 
-/* CONTACT section: background + overlay + centered form */
 .contact{
   position:relative;
-  min-height:720px;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  background: url("img/humanoidconceptart.jpg") center/cover no-repeat;
+  overflow:hidden;
+  /* remove the background: url(...) line from here */
+  background:#000;
 }
 
-.contact-overlay{
+.contact::before{
+  content:"";
   position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.65);
+  inset:-10%;
+  background: url("assets/img/humanoidconceptart.jpg") center/cover no-repeat;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  z-index:0;
 }
 
+.contact-overlay,
 .contact-form-wrap{
   position:relative;
-  max-width:900px;
-  margin:0 auto;
-  padding:70px 18px 80px;
-  text-align:center;
+  z-index:1;
 }
 
 .contact-title{
